@@ -1,0 +1,37 @@
+<?php
+
+namespace Prof\APIBundle\Entity;
+
+use Doctrine\ORM\Mapping AS ORM;
+
+/**
+ *
+ * @ORM\MappedSuperclass(repositoryClass="PersonneRepository")
+ *
+ */
+class Personne
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", length=255)
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    private $Nom;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    private $Prenom;
+
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    private $Email;
+
+}

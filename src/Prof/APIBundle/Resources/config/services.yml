@@ -1,0 +1,7 @@
+parameters:
+#    prof_api.example.class: Prof\APIBundle\Example
+
+services:
+#    prof_api.example:
+#        class: %prof_api.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

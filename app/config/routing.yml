@@ -1,0 +1,8 @@
+prof_api:
+    resource: "@ProfAPIBundle/Resources/config/routing.yml"
+    prefix:   /test
+
+rest :
+  type : rest
+  resource : "routing_rest.yml"
+  prefix : /api

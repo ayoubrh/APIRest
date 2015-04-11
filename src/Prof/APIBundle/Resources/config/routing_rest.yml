@@ -1,0 +1,4 @@
+api :
+  type: rest
+  resource:     "ProfAPIBundle:ProfAPI"
+  name_prefix:  api_
