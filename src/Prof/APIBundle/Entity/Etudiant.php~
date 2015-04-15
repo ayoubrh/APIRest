@@ -9,70 +9,52 @@ use Doctrine\ORM\Mapping AS ORM;
  */
 class Etudiant extends Personne
 {
-    /**
-     * @ORM\Column(type="integer", length=10, nullable=true)
-     */
-    private $CNE;
 
     /**
-     * @ORM\Column(type="float", length=10, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $NoteC1;
 
     /**
-     * @ORM\Column(type="float", length=10, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $NoteC2;
 
     /**
-     * @ORM\Column(type="float", length=10, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $NoteEx;
 
     /**
-     * @ORM\Column(type="float", length=10, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $Autre;
 
     /**
-     * @ORM\Column(type="float", length=10, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $NoteF;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Module", mappedBy="etudiant")
+     * @ORM\ManyToOne(targetEntity="Professeur", inversedBy="$etudiant")
+     * @ORM\JoinColumn(name="profeseur_id", referencedColumnName="id", nullable=true)
      */
-    private $module;
+    private $professeur;
+
+
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->module = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->NoteC1 = "0";
+        $this->NoteC2 = "0";
+        $this->NoteEx = "0";
+        $this->Autre = "0";
+        $this->NoteF = "0";
     }
 
-    /**
-     * Set CNE
-     *
-     * @param integer $cNE
-     * @return Etudiant
-     */
-    public function setCNE($cNE)
-    {
-        $this->CNE = $cNE;
 
-        return $this;
-    }
-
-    /**
-     * Get CNE
-     *
-     * @return integer 
-     */
-    public function getCNE()
-    {
-        return $this->CNE;
-    }
 
     /**
      * Set NoteC1
@@ -190,35 +172,25 @@ class Etudiant extends Personne
     }
 
     /**
-     * Add module
+     * Set professeur
      *
-     * @param \Prof\APIBundle\Entity\Module $module
+     * @param \Prof\APIBundle\Entity\Professeur $professeur
      * @return Etudiant
      */
-    public function addModule(\Prof\APIBundle\Entity\Module $module)
+    public function setProfesseur(\Prof\APIBundle\Entity\Professeur $professeur = null)
     {
-        $this->module[] = $module;
+        $this->professeur = $professeur;
 
         return $this;
     }
 
     /**
-     * Remove module
+     * Get professeur
      *
-     * @param \Prof\APIBundle\Entity\Module $module
+     * @return \Prof\APIBundle\Entity\Professeur 
      */
-    public function removeModule(\Prof\APIBundle\Entity\Module $module)
+    public function getProfesseur()
     {
-        $this->module->removeElement($module);
-    }
-
-    /**
-     * Get module
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getModule()
-    {
-        return $this->module;
+        return $this->professeur;
     }
 }

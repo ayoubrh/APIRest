@@ -9,10 +9,12 @@ use Doctrine\ORM\Mapping AS ORM;
  */
 class Professeur extends Personne
 {
+
     /**
-     * @ORM\ManyToMany(targetEntity="Etablissement", mappedBy="professeur")
+     * @ORM\OneToMany(targetEntity="Etudiant", mappedBy="professeur")
      */
-    private $etablissement;
+    private $etudiant;
+
     /**
      * Constructor
      */
@@ -21,36 +23,37 @@ class Professeur extends Personne
         $this->etablissement = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+
     /**
-     * Add etablissement
+     * Add etudiant
      *
-     * @param \Prof\APIBundle\Entity\Etablissement $etablissement
+     * @param \Prof\APIBundle\Entity\Etudiant $etudiant
      * @return Professeur
      */
-    public function addEtablissement(\Prof\APIBundle\Entity\Etablissement $etablissement)
+    public function addEtudiant(\Prof\APIBundle\Entity\Etudiant $etudiant)
     {
-        $this->etablissement[] = $etablissement;
+        $this->etudiant[] = $etudiant;
 
         return $this;
     }
 
     /**
-     * Remove etablissement
+     * Remove etudiant
      *
-     * @param \Prof\APIBundle\Entity\Etablissement $etablissement
+     * @param \Prof\APIBundle\Entity\Etudiant $etudiant
      */
-    public function removeEtablissement(\Prof\APIBundle\Entity\Etablissement $etablissement)
+    public function removeEtudiant(\Prof\APIBundle\Entity\Etudiant $etudiant)
     {
-        $this->etablissement->removeElement($etablissement);
+        $this->etudiant->removeElement($etudiant);
     }
 
     /**
-     * Get etablissement
+     * Get etudiant
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getEtablissement()
+    public function getEtudiant()
     {
-        return $this->etablissement;
+        return $this->etudiant;
     }
 }

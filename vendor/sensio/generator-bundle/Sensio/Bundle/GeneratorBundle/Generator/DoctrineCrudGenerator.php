@@ -240,13 +240,13 @@ class DoctrineCrudGenerator extends Generator
     }
 
     /**
-     * Generates the new.html.twig template in the final bundle.
+     * Generates the new.json.twig template in the final bundle.
      *
      * @param string $dir The path to the folder that hosts templates in the bundle
      */
     protected function generateNewView($dir)
     {
-        $this->renderFile('crud/views/new.html.twig.twig', $dir.'/new.html.twig', array(
+        $this->renderFile('crud/views/new.json.twig.twig', $dir.'/new.json.twig', array(
             'bundle'            => $this->bundle->getName(),
             'entity'            => $this->entity,
             'route_prefix'      => $this->routePrefix,

@@ -17,7 +17,7 @@ class ProfesseurRepository extends EntityRepository
 
         $query = $this->createQueryBuilder('e')
             ->where('e.Email= :email')
-            ->setParameter('email', $email+'@gmail.com')
+            ->setParameter('email', $email)
             ->getQuery();
         $e=$query-> getresult();
         return $e;

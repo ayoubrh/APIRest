@@ -17,7 +17,7 @@ class PersonneType extends AbstractType
         $builder
             ->add('Nom','text')
             ->add('Prenom','text')
-            ->add('Email','email')
+            ->add('Email','text')
         ;
     }
     
@@ -36,6 +36,7 @@ class PersonneType extends AbstractType
      */
     public function getName()
     {
-        return 'prof_apibundle_personne';
+        return '';
     }
 }
+//prof_apibundle_personne

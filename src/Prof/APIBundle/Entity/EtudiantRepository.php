@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class EtudiantRepository extends EntityRepository
 {
+    public function getetudiants($id)
+    {
+
+        $query = $this->createQueryBuilder('e')
+            ->where('e.professeur = :id')
+            ->setParameter('id', $id)
+            ->getQuery();
+        $e=$query-> getresult();
+        return $e;
+    }
 }

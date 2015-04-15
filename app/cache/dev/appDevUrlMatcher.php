@@ -128,6 +128,31 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
         }
 
         if (0 === strpos($pathinfo, '/api')) {
+            if (0 === strpos($pathinfo, '/api/newp')) {
+                // api_newpersonne
+                if (0 === strpos($pathinfo, '/api/newpersonne') && preg_match('#^/api/newpersonne(?:\\.(?P<_format>json|html))?$#s', $pathinfo, $matches)) {
+                    if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                        $allow = array_merge($allow, array('GET', 'HEAD'));
+                        goto not_api_newpersonne;
+                    }
+
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_newpersonne')), array (  '_controller' => 'Prof\\APIBundle\\Controller\\ProfAPIController::newpersonneAction',  '_format' => 'json',));
+                }
+                not_api_newpersonne:
+
+                // api_newprof
+                if (0 === strpos($pathinfo, '/api/newprof') && preg_match('#^/api/newprof(?:\\.(?P<_format>json|html))?$#s', $pathinfo, $matches)) {
+                    if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                        $allow = array_merge($allow, array('GET', 'HEAD'));
+                        goto not_api_newprof;
+                    }
+
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_newprof')), array (  '_controller' => 'Prof\\APIBundle\\Controller\\ProfAPIController::newprofAction',  '_format' => 'json',));
+                }
+                not_api_newprof:
+
+            }
+
             if (0 === strpos($pathinfo, '/api/professeurs')) {
                 // api_get_professeurs
                 if (preg_match('#^/api/professeurs(?:\\.(?P<_format>json|html))?$#s', $pathinfo, $matches)) {
@@ -153,16 +178,85 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
             }
 
-            // api_post_addprof
-            if (0 === strpos($pathinfo, '/api/addprofs') && preg_match('#^/api/addprofs(?:\\.(?P<_format>json|html))?$#s', $pathinfo, $matches)) {
-                if ($this->context->getMethod() != 'POST') {
-                    $allow[] = 'POST';
-                    goto not_api_post_addprof;
+            // api_get_listetudiant
+            if (0 === strpos($pathinfo, '/api/listetudiants') && preg_match('#^/api/listetudiants/(?P<prof>[^/\\.]++)(?:\\.(?P<_format>json|html))?$#s', $pathinfo, $matches)) {
+                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'HEAD'));
+                    goto not_api_get_listetudiant;
                 }
 
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_post_addprof')), array (  '_controller' => 'Prof\\APIBundle\\Controller\\ProfAPIController::postAddprofAction',  '_format' => 'json',));
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_get_listetudiant')), array (  '_controller' => 'Prof\\APIBundle\\Controller\\ProfAPIController::getListetudiantAction',  '_format' => 'json',));
             }
-            not_api_post_addprof:
+            not_api_get_listetudiant:
+
+            // api_get_etudiant
+            if (0 === strpos($pathinfo, '/api/etudiants') && preg_match('#^/api/etudiants/(?P<etd>[^/\\.]++)(?:\\.(?P<_format>json|html))?$#s', $pathinfo, $matches)) {
+                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'HEAD'));
+                    goto not_api_get_etudiant;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_get_etudiant')), array (  '_controller' => 'Prof\\APIBundle\\Controller\\ProfAPIController::getEtudiantAction',  '_format' => 'json',));
+            }
+            not_api_get_etudiant:
+
+            if (0 === strpos($pathinfo, '/api/add')) {
+                // api_post_addprof
+                if (0 === strpos($pathinfo, '/api/addprofs') && preg_match('#^/api/addprofs(?:\\.(?P<_format>json|html))?$#s', $pathinfo, $matches)) {
+                    if ($this->context->getMethod() != 'POST') {
+                        $allow[] = 'POST';
+                        goto not_api_post_addprof;
+                    }
+
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_post_addprof')), array (  '_controller' => 'Prof\\APIBundle\\Controller\\ProfAPIController::postAddprofAction',  '_format' => 'json',));
+                }
+                not_api_post_addprof:
+
+                // api_post_addetudiant
+                if (0 === strpos($pathinfo, '/api/addetudiants') && preg_match('#^/api/addetudiants/(?P<prof>[^/\\.]++)(?:\\.(?P<_format>json|html))?$#s', $pathinfo, $matches)) {
+                    if ($this->context->getMethod() != 'POST') {
+                        $allow[] = 'POST';
+                        goto not_api_post_addetudiant;
+                    }
+
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_post_addetudiant')), array (  '_controller' => 'Prof\\APIBundle\\Controller\\ProfAPIController::postAddetudiantAction',  '_format' => 'json',));
+                }
+                not_api_post_addetudiant:
+
+            }
+
+            // api_get_supetudiant
+            if (0 === strpos($pathinfo, '/api/supetudiants') && preg_match('#^/api/supetudiants/(?P<etd>[^/\\.]++)(?:\\.(?P<_format>json|html))?$#s', $pathinfo, $matches)) {
+                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'HEAD'));
+                    goto not_api_get_supetudiant;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_get_supetudiant')), array (  '_controller' => 'Prof\\APIBundle\\Controller\\ProfAPIController::getSupetudiantAction',  '_format' => 'json',));
+            }
+            not_api_get_supetudiant:
+
+            // api_post_test
+            if (0 === strpos($pathinfo, '/api/tests') && preg_match('#^/api/tests(?:\\.(?P<_format>json|html))?$#s', $pathinfo, $matches)) {
+                if ($this->context->getMethod() != 'POST') {
+                    $allow[] = 'POST';
+                    goto not_api_post_test;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_post_test')), array (  '_controller' => 'Prof\\APIBundle\\Controller\\ProfAPIController::postTestAction',  '_format' => 'json',));
+            }
+            not_api_post_test:
+
+            // api_post_modifetudiant
+            if (0 === strpos($pathinfo, '/api/modifetudiants') && preg_match('#^/api/modifetudiants/(?P<etd>[^/\\.]++)(?:\\.(?P<_format>json|html))?$#s', $pathinfo, $matches)) {
+                if ($this->context->getMethod() != 'POST') {
+                    $allow[] = 'POST';
+                    goto not_api_post_modifetudiant;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_post_modifetudiant')), array (  '_controller' => 'Prof\\APIBundle\\Controller\\ProfAPIController::postModifetudiantAction',  '_format' => 'json',));
+            }
+            not_api_post_modifetudiant:
 
         }
 

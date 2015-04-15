@@ -78,6 +78,7 @@
   'DoctrineBundle:Collector:db.html.twig' => 'C:\\wamp\\www\\APIRest\\vendor\\doctrine\\doctrine-bundle/Resources/views/Collector/db.html.twig',
   'DoctrineBundle:Collector:explain.html.twig' => 'C:\\wamp\\www\\APIRest\\vendor\\doctrine\\doctrine-bundle/Resources/views/Collector/explain.html.twig',
   'ProfAPIBundle:Default:index.html.twig' => 'C:\\wamp\\www\\APIRest\\src\\Prof\\APIBundle/Resources/views/Default/index.html.twig',
+  'ProfAPIBundle:Personne:new.json.twig' => 'C:\\wamp\\www\\APIRest\\src\\Prof\\APIBundle/Resources/views/Personne/new.json.twig',
   'WebProfilerBundle:Collector:ajax.html.twig' => 'C:\\wamp\\www\\APIRest\\vendor\\symfony\\symfony\\src\\Symfony\\Bundle\\WebProfilerBundle/Resources/views/Collector/ajax.html.twig',
   'WebProfilerBundle:Collector:config.html.twig' => 'C:\\wamp\\www\\APIRest\\vendor\\symfony\\symfony\\src\\Symfony\\Bundle\\WebProfilerBundle/Resources/views/Collector/config.html.twig',
   'WebProfilerBundle:Collector:events.html.twig' => 'C:\\wamp\\www\\APIRest\\vendor\\symfony\\symfony\\src\\Symfony\\Bundle\\WebProfilerBundle/Resources/views/Collector/events.html.twig',
