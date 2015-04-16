@@ -258,6 +258,28 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             }
             not_api_post_modifetudiant:
 
+            // api_get_note
+            if (0 === strpos($pathinfo, '/api/notes') && preg_match('#^/api/notes/(?P<etd>[^/\\.]++)(?:\\.(?P<_format>json|html))?$#s', $pathinfo, $matches)) {
+                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'HEAD'));
+                    goto not_api_get_note;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_get_note')), array (  '_controller' => 'Prof\\APIBundle\\Controller\\ProfAPIController::getNoteAction',  '_format' => 'json',));
+            }
+            not_api_get_note:
+
+            // api_get_allnote
+            if (0 === strpos($pathinfo, '/api/allnotes') && preg_match('#^/api/allnotes/(?P<prof>[^/\\.]++)(?:\\.(?P<_format>json|html))?$#s', $pathinfo, $matches)) {
+                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'HEAD'));
+                    goto not_api_get_allnote;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_get_allnote')), array (  '_controller' => 'Prof\\APIBundle\\Controller\\ProfAPIController::getAllnoteAction',  '_format' => 'json',));
+            }
+            not_api_get_allnote:
+
         }
 
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();

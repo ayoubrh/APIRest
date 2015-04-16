@@ -22,4 +22,5 @@ class EtudiantRepository extends EntityRepository
         $e=$query-> getresult();
         return $e;
     }
+
 }

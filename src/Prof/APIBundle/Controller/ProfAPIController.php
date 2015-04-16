@@ -17,6 +17,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Request\ParamFetcher;
+use FOS\RestBundle\Controller\Annotations\QueryParam;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\Groups;
@@ -250,6 +252,74 @@ class ProfAPIController extends Controller
 
 
 
+    /*
+     *
+     * @param Etudiant $etd
+     *
+     * @return array
+     * @View()
+     *
+     * @Paramconverter("etd",class="ProfAPIBundle:Etudiant")
+     */
+    public function getNoteAction(Etudiant $etd){
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Les Notes ')
+            ->setFrom($etd->getProfesseur()->getEmail())
+            ->setTo($etd->getEmail())
+            ->setBody($this->renderView('ProfAPIBundle:Mail:noteemail.txt.twig', array(
+                'etd' => $etd,
+                'prof'=> $etd->getProfesseur())));
+
+        if($this->get('mailer')->send($message)){
+            return array(
+                'success' => true,
+                //'form' => $form
+            );
+        }else  return array(
+            'success' => false,
+        );
+    }
+
+    /*
+     *
+     * @param Etudiant $etd
+     *
+     * @return array
+     * @View()
+     *
+     * @Paramconverter("etd",class="ProfAPIBundle:Etudiant")
+     */
+    public function getAllnoteAction(Professeur $prof){
+
+
+
+        $etd = $this->getDoctrine()->getManager()->getRepository('ProfAPIBundle:Etudiant')->getetudiants($prof->getId());
+        $v = 1;
+        foreach ($etd as $e){
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Les Notes ')
+                ->setFrom($prof->getEmail())
+                ->setTo($e->getEmail())
+                ->setBody($this->renderView('ProfAPIBundle:Mail:noteemail.txt.twig', array(
+                    'etd' => $e,
+                    'prof'=> $prof)));
+            if(!$this->get('mailer')->send($message)){
+                $i= 0;
+            }
+        }
+
+        if($v == 1){
+            return array(
+                'success' => true,
+                //'form' => $form
+            );
+        }else  return array(
+            'success' => false,
+        );
+    }
+
+
 
 
 
@@ -278,6 +348,8 @@ class ProfAPIController extends Controller
     }
 
 
+
+
     /**
      * Create new Professeur (in batch)
      * @var Request $request json request
@@ -304,5 +376,7 @@ class ProfAPIController extends Controller
             );
         }
     }
+
+
 
 }
